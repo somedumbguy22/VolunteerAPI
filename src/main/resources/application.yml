@@ -1,0 +1,8 @@
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.hug: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: [redacted]\application%d{yyyy-MM-dd HH:mm:ss}.log
