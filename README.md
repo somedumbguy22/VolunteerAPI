@@ -12,8 +12,7 @@ This repository is for the HUG volunteer program.
 		/student/
 		/activestudent/
 		/student/{studentId}
-		/get-by-studentFirst-LastName-and-zipCd/
-			requires query parameters: studentFirstName, studentLastName, studentZipCd
+		/studentfirstname/{studentFirstName}/studentLastName/{studentLastName}/zip/{studentZipCd}
 
 	- POST (Insert):
 		/student/
@@ -30,8 +29,7 @@ This repository is for the HUG volunteer program.
 		/lesson/
 		/activelesson/
 		/lesson/{lessonId}
-		/get-by-lessontitle-and-theme/
-			requires query parameters: lessonTitle, lessonTheme
+		/lesson/{lessonTitle}/theme/{lessonTheme}
 
 	- POST (Insert):
 		/lesson/
@@ -48,8 +46,7 @@ This repository is for the HUG volunteer program.
 		/school/
 		/activeschool/
 		/school/{schoolId}
-		/get-by-schoolName-and-city/
-			requires query parameters: schoolName, schoolCity
+		/school/{schoolName}/city/{schoolCity}
 
 	- POST (Insert):
 		/school/
@@ -66,8 +63,7 @@ This repository is for the HUG volunteer program.
 		/volunteer/
 		/activevolunteer/
 		/volunteer/{volunteerId}
-		/get-by-volunteerFirstName-and-LastName-and-email/
-			requires query parameters: volunteerFirstName, volunteerLastName, volunteerEmail
+		/volunteerfirstname/{volunteerFirstName}/volunteerlastname/{volunteerLastName}/email/{volunteerEmail}
 
 	- POST (Insert):
 		/volunteer/
@@ -81,11 +77,10 @@ This repository is for the HUG volunteer program.
 
 ###Session Plan:
 	- GET (Retrieve):
-		/get-by-studentid-and-schoolid-and-lessonid/
-			requires query parameters: studentId, schoolId, lessonId
+		/school/{schoolId}/student/{studentId}/lesson/{lessonId}
 	- POST (Insert):
 		/sessionPlanAttempt/
 	- PUT (Update):
-		/updateSessionPlanAttemptData/
+		/SessionPlanAttemptData/
 	- DELETE (Remove): 
 		- Note: This operation is always a soft delete, as indicated by the delete flag in the database

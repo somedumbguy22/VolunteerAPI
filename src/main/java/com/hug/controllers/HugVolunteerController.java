@@ -157,7 +157,7 @@ public class HugVolunteerController {
 		}
     }
 	
-	@RequestMapping(value = "/get-by-volunteerFirstName-and-LastName-and-email")
+	@RequestMapping(value = "/volunteerfirstname/{volunteerFirstName}/volunteerlastname/{volunteerLastName}/email/{volunteerEmail}")
 	@ResponseBody
 	public HugVolunteer getByFirstandLastNameAndEmail(
 			String volunteerFirstName, String volunteerLastName,
@@ -169,7 +169,6 @@ public class HugVolunteerController {
 					.getByVolunteerFirstNameLastNameAndEmail(
 							volunteerFirstName, volunteerLastName,
 							volunteerEmail);
-			// userId = String.valueOf(user.getId());
 		} catch (Exception ex) {
 			
 			return hugVolunteer;
@@ -212,7 +211,7 @@ public class HugVolunteerController {
     }
 	
 
-	@RequestMapping(value = "//volunteer/", method = RequestMethod.PUT,
+	@RequestMapping(value = "/volunteer/", method = RequestMethod.PUT,
 			consumes = {"application/json", "application/xml" }, 
 			produces = {"application/json", "application/xml" })
 	@ResponseBody
