@@ -37,7 +37,7 @@ public class DatabaseConfig {
    */
   @Bean
   public DataSource dataSource() {
-	logger.info("Initiating Database Connection");
+	  logger.info("Initiating Database Connection");
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName(env.getProperty("db.driver"));
     dataSource.setUrl(env.getProperty("db.url"));

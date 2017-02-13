@@ -32,40 +32,42 @@ public class HugSessionPlanAttemptController {
 			System.out.println("Plan Attempts is :" + hugSessionPlanAttempts);
 			hugSessionPlanAttemptsDao.create(hugSessionPlanAttempts);
 		} else {
+			
 			return "user details cannot be null";
 		}
+		
 		return "Successfully created";
 
 	}
 
-	@RequestMapping(value = "/get-by-studentid-and-schoolid-and-lessonid")
+	@RequestMapping(value = "/school/{schoolId}/student/{studentId}/lesson/{lessonId}")
 	@ResponseBody
 	public HugSessionPlanAttempts getByStudentIdAndSchoolIdAndLessonId(
 			int studentId, int schoolId, int lessonId) {
 
 		HugSessionPlanAttempts hugSessionPlanAttempts = null;
 		try {
+			
 			hugSessionPlanAttempts = hugSessionPlanAttemptsDao
 					.getByStudentIdAndSchoolIdAndInstructorIdAndLessonId(
 							studentId, schoolId, lessonId);
 
 		} catch (Exception ex) {
+			
 			return hugSessionPlanAttempts;
 		}
+		
 		return hugSessionPlanAttempts;
 	}
 
-	/**
-	 * Update the email and the name for the user indentified by the passed id.
-	 */
-
-	@RequestMapping(value = "/updateSessionPlanAttemptData", method = RequestMethod.PUT, 
+	@RequestMapping(value = "/sessionPlanAttempt", method = RequestMethod.PUT, 
 			consumes = {"application/json", "application/xml" }, 
 			produces = {"application/json", "application/xml" })
 	@ResponseBody
 	public String updateVolunteer(
 			@RequestBody @Valid HugSessionPlanAttempts hugSessionPlanAttempts) {
 		try {
+			
 			HugSessionPlanAttempts hugSessionPlanAttemptsFromDB = hugSessionPlanAttemptsDao
 					.getByStudentIdAndSchoolIdAndInstructorIdAndLessonId(
 							hugSessionPlanAttempts.getSpaStudentId(),
@@ -76,9 +78,12 @@ public class HugSessionPlanAttemptController {
 							.getLastModifiedBy());
 
 			hugSessionPlanAttemptsDao.update(hugSessionPlanAttemptsFromDB);
+		
 		} catch (Exception ex) {
+			
 			return "Error updating the user: " + ex.toString();
 		}
+
 		return "User succesfully updated!";
 	}
 

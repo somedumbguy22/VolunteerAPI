@@ -84,6 +84,7 @@ public class HugStudentController {
 	        	return new ResponseEntity<GenericResponseEntity>(response, HttpStatus.OK);
 	        }
 	        else{
+	            
 	            return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.NO_CONTENT);
 	        }
     	}
@@ -97,7 +98,6 @@ public class HugStudentController {
     	}
     }
 	
-	///----------------------------------------------------------------------------
 	@RequestMapping(value = "/activestudent/", method = RequestMethod.GET)
     public ResponseEntity<GenericResponseEntity> listActiveStudents()
     {
@@ -124,7 +124,6 @@ public class HugStudentController {
     	}
     }
 	
-	///----------------------------------------------------------------------------
 	
 	@RequestMapping(value = "/student/{studentId}", method = RequestMethod.GET)
     public ResponseEntity<GenericResponseEntity> listStudent(@PathVariable("studentId") long studentId)
@@ -157,18 +156,21 @@ public class HugStudentController {
 		}
     }
 	
-	@RequestMapping(value="/get-by-studentFirst-LastName-and-zipCd")
+	@RequestMapping(value="/studentfirstname/{studentFirstName}/studentLastName/{studentLastName}/zip/{studentZipCd}")
 	  @ResponseBody
 	  public HugStudent getBySchoolNameAndCity(String studentFirstName,String studentLastName, String studentZipCd) {
-	    //String userId;
+
 	    HugStudent hugStudent = null;
 	    try {
+	    	
 	    	hugStudent = hugStudentDao.getByStudentFirstAndLastNameAndZipCd(studentFirstName, studentLastName, studentZipCd);
-	      //userId = String.valueOf(user.getId());
+	      
 	    }
 	    catch (Exception ex) {
+	      
 	      return hugStudent;
 	    }
+	    
 	    return hugStudent;
 	  }
 	
@@ -205,9 +207,6 @@ public class HugStudentController {
 		}
     }
 	
-	/**
-	   * Update the student identified by the passed id.
-	   */
 	@RequestMapping(value = "/student/", method = RequestMethod.PUT,
 			consumes = {"application/json", "application/xml" }, 
 			produces = {"application/json", "application/xml" })

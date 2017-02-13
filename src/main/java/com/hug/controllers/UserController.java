@@ -22,31 +22,25 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.hug.models.User;
 import com.hug.models.UserDao;
 
-/**
- * Class UserController
- */
+
 @JsonAutoDetect(getterVisibility=Visibility.NONE)
 @Controller
 public class UserController {
 
-  // ------------------------
-  // PUBLIC METHODS
-  // ------------------------
-
-  /**
-   * Create a new user with an auto-generated id and email and name as passed 
-   * values.
-   */
   @RequestMapping(value="/create")
   @ResponseBody
   public String create(String email, String name) {
     try {
+      
       User user = new User(email, name);
+      
       userDao.create(user);
     }
     catch (Exception ex) {
+      
       return "Error creating the user: " + ex.toString();
     }
+    
     return "User succesfully created!";
   }
   
@@ -55,49 +49,49 @@ public class UserController {
 			produces = {"application/json", "application/xml" })
 	@ResponseBody
 	public String getUserDetails(@RequestBody User user){
-	  if (user!=null){
-		  userDao.create(user);
+	  if (user!=null) {
+		  
+      userDao.create(user);
 	  }else {
-		  return "user details cannot be null";
+		  
+      return "user details cannot be null";
 	  }
-	  return "Successfully created";
+	  
+    return "Successfully created";
   }
-  /**
-   * Delete the user with the passed id.
-   */
+
   @RequestMapping(value="/delete")
   @ResponseBody
   public String delete(long id) {
     try {
+      
       User user = new User(id);
       userDao.delete(user);
     }
     catch (Exception ex) {
+      
       return "Error deleting the user: " + ex.toString();
     }
+    
     return "User succesfully deleted!";
   }
-  
-  /**
-   * Retrieve the id for the user with the passed email address.
-   */
-  @RequestMapping(value="/get-by-email")
+
+  @RequestMapping(value="/email/{email}")
   @ResponseBody
   public String getByEmail(String email) {
     String userId;
     try {
+      
       User user = userDao.getByEmail(email);
       userId = String.valueOf(user.getId());
     }
     catch (Exception ex) {
+      
       return "User not found: " + ex.toString();
     }
+    
     return "The user id is: " + userId;
   }
-  
-  /**
-   * Retrieve the id for the user with the passed email address.
-   */
   
   @RequestMapping(value="/get-by-email1")
   @ResponseBody
@@ -105,11 +99,14 @@ public class UserController {
     String userId;
     User user = null;
     try {
-      user = userDao.getByEmail(email);
+        
+        user = userDao.getByEmail(email);
      }
     catch (Exception ex) {
-    	return  user;
+    	
+      return  user;
     }
+    
     return user;
   }
   
@@ -123,8 +120,10 @@ public class UserController {
       //userId = String.valueOf(user.getId());
     }
     catch (Exception ex) {
+      
       return user;
     }
+    
     return user;
   }
   

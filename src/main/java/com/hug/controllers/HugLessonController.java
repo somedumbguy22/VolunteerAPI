@@ -83,7 +83,8 @@ public class HugLessonController {
 	        	response.setDataList(hugLessons);
 	        	return new ResponseEntity<GenericResponseEntity>(response, HttpStatus.OK);
 	        }
-	        else{
+	        else {
+	            
 	            return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.NO_CONTENT);
 	        }
     	}
@@ -109,7 +110,8 @@ public class HugLessonController {
 	        	response.setDataList(hugLessons);
 	        	return new ResponseEntity<GenericResponseEntity>(response, HttpStatus.OK);
 	        }
-	        else{
+	        else { 
+	            
 	            return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.NO_CONTENT);
 	        }
     	}
@@ -155,19 +157,21 @@ public class HugLessonController {
 		}
     }
 	
-	@RequestMapping(value = "/get-by-lessontitle-and-theme")
+	@RequestMapping(value = "/lesson/{lessonTitle}/theme/{lessonTheme}")
 	@ResponseBody
 	public HugLessons getByLessonTitleAndTheme(String lessonTitle,
 			String lessonTheme) {
-		// String userId;
+
 		HugLessons hugLessons = null;
+		
 		try {
 			hugLessons = hugLessonsDao.getByLessonTitleAndTheme(lessonTitle,
 					lessonTheme);
-			// userId = String.valueOf(user.getId());
 		} catch (Exception ex) {
+			
 			return hugLessons;
 		}
+		
 		return hugLessons;
 	}
 
@@ -202,10 +206,7 @@ public class HugLessonController {
     		return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
-	
-	/**
-	   * Update the lesson identified by the passed id.
-	   */
+
 	@RequestMapping(value = "/lesson/", method = RequestMethod.PUT,
 			consumes = {"application/json", "application/xml" }, 
 			produces = {"application/json", "application/xml" })

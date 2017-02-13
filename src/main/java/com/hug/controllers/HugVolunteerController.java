@@ -36,41 +36,41 @@ public class HugVolunteerController {
 	@ResponseBody
     public ResponseEntity<GenericResponseEntity> addVolunteer(@RequestBody @Valid HugVolunteer hugVolunteer) 
 		{
-	    GenericResponseEntity<HugVolunteer> response = new GenericResponseEntity<HugVolunteer>();
-	  	if (hugVolunteer!=null)
-	  	{
-	    	try
-	    	{
-		    	if (hugVolunteerDao.getByVolunteerFirstNameLastNameAndEmail(hugVolunteer.getVolunteerFirstName(),hugVolunteer.getVolunteerlastName(), hugVolunteer.getVolunteerEmail()) != null) {
+		    GenericResponseEntity<HugVolunteer> response = new GenericResponseEntity<HugVolunteer>();
+		  	if (hugVolunteer!=null)
+		  	{
+		    	try
+		    	{
+			    	if (hugVolunteerDao.getByVolunteerFirstNameLastNameAndEmail(hugVolunteer.getVolunteerFirstName(),hugVolunteer.getVolunteerlastName(), hugVolunteer.getVolunteerEmail()) != null) {
+			    		ErrorResponseEntity error = new ErrorResponseEntity();
+			    		error.setErrorCode(HttpStatus.CONFLICT.value());
+			    		error.setErrorMessage("Volunteer Id already exist");
+			    		response.setErrorResponse(error);
+			            return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.CONFLICT);
+			        }
+			    	
+			    	long volunteerId = hugVolunteerDao.create(hugVolunteer);
+			    	hugVolunteer.setVolunteerId(volunteerId);
+			        response.setDataList(Arrays.asList(hugVolunteer));
+		        	return new ResponseEntity<GenericResponseEntity>(response, HttpStatus.CREATED);
+		    	}
+		    	catch(Exception e)
+		    	{
 		    		ErrorResponseEntity error = new ErrorResponseEntity();
-		    		error.setErrorCode(HttpStatus.CONFLICT.value());
-		    		error.setErrorMessage("Volunteer Id already exist");
+		    		error.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		    		error.setErrorMessage("Internal Server Error");
 		    		response.setErrorResponse(error);
-		            return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.CONFLICT);
-		        }
-		    	
-		    	long volunteerId = hugVolunteerDao.create(hugVolunteer);
-		    	hugVolunteer.setVolunteerId(volunteerId);
-		        response.setDataList(Arrays.asList(hugVolunteer));
-	        	return new ResponseEntity<GenericResponseEntity>(response, HttpStatus.CREATED);
-	    	}
-	    	catch(Exception e)
-	    	{
-	    		ErrorResponseEntity error = new ErrorResponseEntity();
-	    		error.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-	    		error.setErrorMessage("Internal Server Error");
-	    		response.setErrorResponse(error);
-	    		return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-	    	}
-	  	}
-	  	else {
-		  		 
-	  		ErrorResponseEntity error = new ErrorResponseEntity();
- 		error.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
- 		error.setErrorMessage("Volunteer details cannot be null");
- 		response.setErrorResponse(error);
- 		return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-	  		}
+		    		return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		    	}
+		  	}
+		  	else {
+			  		 
+		  		ErrorResponseEntity error = new ErrorResponseEntity();
+		 		error.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		 		error.setErrorMessage("Volunteer details cannot be null");
+		 		response.setErrorResponse(error);
+		 		return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		  	}
 	    }
 
 	@RequestMapping(value = "/volunteer/", method = RequestMethod.GET)
@@ -112,6 +112,7 @@ public class HugVolunteerController {
 	        	return new ResponseEntity<GenericResponseEntity>(response, HttpStatus.OK);
 	        }
 	        else{
+	            
 	            return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.NO_CONTENT);
 	        }
     	}
@@ -161,7 +162,7 @@ public class HugVolunteerController {
 	public HugVolunteer getByFirstandLastNameAndEmail(
 			String volunteerFirstName, String volunteerLastName,
 			String volunteerEmail) {
-		// String userId;
+
 		HugVolunteer hugVolunteer = null;
 		try {
 			hugVolunteer = hugVolunteerDao
@@ -170,8 +171,10 @@ public class HugVolunteerController {
 							volunteerEmail);
 			// userId = String.valueOf(user.getId());
 		} catch (Exception ex) {
+			
 			return hugVolunteer;
 		}
+		
 		return hugVolunteer;
 	}
 
@@ -208,9 +211,7 @@ public class HugVolunteerController {
 		}
     }
 	
-	/**
-	   * Update the lesson identified by the passed id.
-	   */
+
 	@RequestMapping(value = "//volunteer/", method = RequestMethod.PUT,
 			consumes = {"application/json", "application/xml" }, 
 			produces = {"application/json", "application/xml" })
@@ -228,6 +229,7 @@ public class HugVolunteerController {
 	    		response.setErrorResponse(error);
 	            return new ResponseEntity<GenericResponseEntity>(response,HttpStatus.NOT_FOUND);
 	        }
+	        
 	        hugVolunteerDao.update(hugVolunteer);
 	        response.setDataList(Arrays.asList(hugVolunteer));
 	        return new ResponseEntity<GenericResponseEntity>(response, HttpStatus.OK);

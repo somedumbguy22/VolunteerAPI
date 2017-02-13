@@ -156,16 +156,17 @@ public class HugSchoolController {
 		}
     }
 	
-	@RequestMapping(value = "/get-by-schoolName-and-city")
+	@RequestMapping(value = "/school/{schoolName}/city/{schoolCity}")
 	@ResponseBody
 	public HugSchool getBySchoolNameAndCity(String schoolName, String schoolCity) {
-		// String userId;
+	
 		HugSchool hugSchool = null;
 		try {
-			hugSchool = hugSchoolDao.getBySchoolNameAndCity(schoolName,
-					schoolCity);
-			// userId = String.valueOf(user.getId());
+			
+			hugSchool = hugSchoolDao.getBySchoolNameAndCity(schoolName, schoolCity);
+
 		} catch (Exception ex) {
+			
 			return hugSchool;
 		}
 		return hugSchool;
@@ -203,11 +204,7 @@ public class HugSchoolController {
 		}
     }
 
-	/**
-	 * Update the school data identified by the passed new school data.
-	 */
-
-	@RequestMapping(value = "/School/", method = RequestMethod.PUT, 
+	@RequestMapping(value = "/school/", method = RequestMethod.PUT, 
 			consumes = {"application/json", "application/xml" }, 
 			produces = {"application/json", "application/xml" })
 	@ResponseBody
